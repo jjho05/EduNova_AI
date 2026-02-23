@@ -1,0 +1,50 @@
+name: generador_educativo
+description: Generador de Contenido Educativo Inteligente con IA
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Estado
+  provider: ^6.1.0
+  
+  # Networking
+  dio: ^5.4.0
+  
+  # Almacenamiento
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.2
+  
+  # Routing
+  go_router: ^13.0.0
+  
+  # UI
+  google_fonts: ^6.1.0
+  cupertino_icons: ^1.0.6
+  
+  # Gráficas
+  fl_chart: ^0.66.0
+  
+  # PDFs
+  file_picker: ^6.1.1
+  pdf: ^3.10.7
+  printing: ^5.12.0
+  
+  # Imágenes
+  image_picker: ^1.0.7
+  
+  # Utilidades
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
