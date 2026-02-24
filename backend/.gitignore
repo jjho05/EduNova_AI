@@ -1,12 +1,4 @@
-# uploads/
-*.pdf
-*.docx
-*.doc
-*.jpg
-*.jpeg
-*.png
-*.gif
-
-# temp files
-temp/
-*.tmp
+venv/
+__pycache__/
+*.db
+*.wasm

@@ -5,11 +5,14 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install system dependencies for PDF processing and PostgreSQL
+# Also force IPv6 preference for Supabase free-tier connection issues
 RUN apt-get update && apt-get install -y \
     poppler-utils \
     libpq-dev \
     gcc \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "precedence ::ffff:0:0/96  10" >> /etc/gai.conf \
+    && echo "precedence ::/0  100" >> /etc/gai.conf
 
 # Copy requirements first for layer caching
 COPY requirements.txt .
