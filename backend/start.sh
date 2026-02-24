@@ -26,27 +26,9 @@ Base.metadata.create_all(bind=engine)
 print('✅ Tablas creadas/verificadas')
 "
 
-# Check if database needs seeding (only on first run)
-echo "🌱 Verificando si necesita datos iniciales..."
-python -c "
-from app.database import SessionLocal
-from app.models.user import User
-from app.models.document import Document
-from app.models.enrollment import Enrollment
-from app.models.quiz_attempt import QuizAttempt
-from app.models.activity_log import ActivityLog
-
-db = SessionLocal()
-user_count = db.query(User).count()
-db.close()
-
-if user_count == 0:
-    print('Base de datos vacía. Ejecutando seed...')
-    import subprocess
-    subprocess.run(['python', 'seed_data.py'])
-else:
-    print(f'✅ Base de datos ya contiene {user_count} usuarios. Omitiendo seed.')
-"
+# Always run seed to ensure data integrity (seed_data.py handles cleanup internally)
+echo "🌱 Ejecutando seed de datos iniciales..."
+python seed_data.py
 
 # Start FastAPI server on port 7860 (Hugging Face standard)
 echo "🔥 Iniciando servidor FastAPI en puerto 7860..."
