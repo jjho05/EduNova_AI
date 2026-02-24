@@ -61,8 +61,9 @@ class ApiService {
   // Courses
   Future<List<Course>> getCourses() async {
     final response = await _dio.get('/courses');
-    return (response.data as List)
-        .map((json) => Course.fromJson(json))
+    final List<dynamic> data = response.data is List ? response.data : [];
+    return data
+        .map((json) => Course.fromJson(Map<String, dynamic>.from(json)))
         .toList();
   }
 

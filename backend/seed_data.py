@@ -122,7 +122,7 @@ def create_seed_data():
                 id=str(uuid4()),
                 title=course_data["title"],
                 description=course_data["description"],
-                teacher_id=teacher.id,
+                user_id=teacher.id,
                 created_at=datetime.utcnow().isoformat()
             )
             courses.append(course)
