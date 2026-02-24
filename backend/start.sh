@@ -31,6 +31,10 @@ echo "🌱 Verificando si necesita datos iniciales..."
 python -c "
 from app.database import SessionLocal
 from app.models.user import User
+from app.models.document import Document
+from app.models.enrollment import Enrollment
+from app.models.quiz_attempt import QuizAttempt
+from app.models.activity_log import ActivityLog
 
 db = SessionLocal()
 user_count = db.query(User).count()
