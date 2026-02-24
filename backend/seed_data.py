@@ -15,6 +15,12 @@ from app.models.module import Module
 from app.models.enrollment import Enrollment
 from app.models.assignment import Assignment
 from app.models.quiz import Quiz
+from app.models.document import Document
+from app.models.notification import Notification
+from app.models.progress import Progress
+from app.models.schedule import Schedule
+from app.models.quiz_attempt import QuizAttempt
+from app.models.activity_log import ActivityLog
 from passlib.context import CryptContext
 from uuid import uuid4
 from datetime import datetime, timedelta
