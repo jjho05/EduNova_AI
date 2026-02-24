@@ -12,13 +12,22 @@ else:
     engine_kwargs.update(
         {
             "pool_pre_ping": True,
-            "pool_recycle": 3600,
-            "pool_size": 10,
-            "max_overflow": 20,
+            "pool_recycle": 300,
+            "pool_size": 3,
+            "max_overflow": 5,
+            "connect_args": {
+                "options": "-c statement_timeout=60000",
+            },
         }
     )
 
-engine = create_engine(settings.DATABASE_URL, **engine_kwargs)
+# Supabase Pooler requires prepared_statements=false in the URL
+db_url = settings.DATABASE_URL
+if "pooler.supabase.com" in db_url and "prepared_statements" not in db_url:
+    separator = "&" if "?" in db_url else "?"
+    db_url = f"{db_url}{separator}prepared_statements=false"
+
+engine = create_engine(db_url, **engine_kwargs)
 
 # Create session
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
