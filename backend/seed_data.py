@@ -21,6 +21,8 @@ from app.models.progress import Progress
 from app.models.schedule import Schedule
 from app.models.quiz_attempt import QuizAttempt
 from app.models.activity_log import ActivityLog
+from app.models.course_statistics import CourseStatistics
+from app.models.question_statistics import QuestionStatistics
 from passlib.context import CryptContext
 from uuid import uuid4
 from datetime import datetime, timedelta
