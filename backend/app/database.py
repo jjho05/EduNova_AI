@@ -4,14 +4,21 @@ from sqlalchemy.orm import sessionmaker
 from .config import settings
 
 # Create engine
-engine = create_engine(
-    settings.DATABASE_URL,
-    pool_pre_ping=True,
-    pool_recycle=3600,
-    pool_size=10,  # Default pool size
-    max_overflow=20,  # Allow extra connections during peak load
-    echo=False  # Set to False for production performance
-)
+engine_kwargs = {"echo": False}
+
+if settings.DATABASE_URL.startswith("sqlite"):
+    engine_kwargs["connect_args"] = {"check_same_thread": False}
+else:
+    engine_kwargs.update(
+        {
+            "pool_pre_ping": True,
+            "pool_recycle": 3600,
+            "pool_size": 10,
+            "max_overflow": 20,
+        }
+    )
+
+engine = create_engine(settings.DATABASE_URL, **engine_kwargs)
 
 # Create session
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
