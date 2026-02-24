@@ -59,7 +59,7 @@ def create_seed_data():
             id=str(uuid4()),
             email="profesor@test.com",
             name="Prof. Juan García",
-            hashed_password=hash_password("profesor123"),
+            password_hash=hash_password("profesor123"),
             role="teacher",
             created_at=datetime.utcnow().isoformat()
         )
@@ -78,7 +78,7 @@ def create_seed_data():
                 id=str(uuid4()),
                 email=email,
                 name=name,
-                hashed_password=hash_password("alumno123"),
+                password_hash=hash_password("alumno123"),
                 role="student",
                 created_at=datetime.utcnow().isoformat()
             )
