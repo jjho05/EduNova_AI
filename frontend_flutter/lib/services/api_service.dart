@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../config/constants.dart';
 import 'storage_service.dart';
@@ -61,10 +62,20 @@ class ApiService {
   // Courses
   Future<List<Course>> getCourses() async {
     final response = await _dio.get('/courses');
-    final List<dynamic> data = response.data is List ? response.data : [];
-    return data
-        .map((json) => Course.fromJson(Map<String, dynamic>.from(json)))
-        .toList();
+    dynamic rawData = response.data;
+
+    // If Dio returned a String, decode it manually
+    if (rawData is String) {
+      rawData = jsonDecode(rawData);
+    }
+
+    if (rawData is List) {
+      return rawData
+          .map((json) => Course.fromJson(Map<String, dynamic>.from(json)))
+          .toList();
+    }
+
+    return [];
   }
 
   Future<Course> createCourse(String title, String? description) async {
