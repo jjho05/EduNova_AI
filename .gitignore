@@ -40,3 +40,4 @@ frontend_flutter/coverage/
 
 # --- DOCKER ---
 .dockerignore
+*.db
