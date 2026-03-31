@@ -1,3 +1,12 @@
+---
+title: EduNova AI
+emoji: 🎓
+colorFrom: indigo
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
 # 🎓 Sistema Educativo Inteligente con IA
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
