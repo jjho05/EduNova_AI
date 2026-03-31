@@ -177,7 +177,7 @@ def create_seed_data():
             for course in courses:
                 enrollment = Enrollment(
                     id=str(uuid4()),
-                    user_id=student.id,
+                    student_id=student.id,
                     course_id=course.id,
                     enrolled_at=datetime.utcnow().isoformat()
                 )
