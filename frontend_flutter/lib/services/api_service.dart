@@ -135,12 +135,15 @@ class ApiService {
 
   Future<void> submitAssignment(
       String assignmentId, String? content, PlatformFile? file) async {
-    if (file != null && file.path != null) {
-      // Upload with file
+    if (file != null) {
+      // Upload with file (Cross-platform)
       FormData formData = FormData.fromMap({
         'assignment_id': assignmentId,
         if (content != null) 'content': content,
-        'file': await MultipartFile.fromFile(file.path!, filename: file.name),
+        'file': MultipartFile.fromBytes(
+          file.bytes!,
+          filename: file.name,
+        ),
       });
       await _dio.post('/submissions', data: formData);
     } else {
@@ -175,15 +178,18 @@ class ApiService {
 
   // Documents
   Future<Map<String, dynamic>> uploadDocument({
-    required File file,
+    required List<int> fileBytes,
+    required String fileName,
     required String name,
     String? description,
     required String documentType,
     String? courseId,
   }) async {
     FormData formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(file.path,
-          filename: file.path.split('/').last),
+      'file': MultipartFile.fromBytes(
+        fileBytes,
+        filename: fileName,
+      ),
       'name': name,
       if (description != null) 'description': description,
       'document_type': documentType,

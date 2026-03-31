@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:io';
+import 'dart:typed_data';
 import '../../config/theme.dart';
 import '../../services/api_service.dart';
 
@@ -21,7 +21,8 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  File? _selectedFile;
+  Uint8List? _selectedFileBytes;
+  String? _selectedFileName;
   String _documentType = 'other';
   bool _isUploading = false;
   bool _isProcessing = false;
@@ -46,11 +47,13 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'],
+        withData: true, // Required to get bytes on native platforms
       );
 
       if (result != null) {
         setState(() {
-          _selectedFile = File(result.files.single.path!);
+          _selectedFileBytes = result.files.single.bytes;
+          _selectedFileName = result.files.single.name;
           if (_nameController.text.isEmpty) {
             _nameController.text = result.files.single.name;
           }
@@ -66,7 +69,7 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
   }
 
   Future<void> _uploadDocument() async {
-    if (!_formKey.currentState!.validate() || _selectedFile == null) {
+    if (!_formKey.currentState!.validate() || _selectedFileBytes == null) {
       return;
     }
 
@@ -77,7 +80,8 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
 
       // Upload document
       final response = await apiService.uploadDocument(
-        file: _selectedFile!,
+        fileBytes: _selectedFileBytes!,
+        fileName: _selectedFileName!,
         name: _nameController.text,
         description: _descriptionController.text.isEmpty
             ? null
@@ -199,19 +203,19 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
                     child: Column(
                       children: [
                         Icon(
-                          _selectedFile == null
+                          _selectedFileBytes == null
                               ? Icons.cloud_upload_outlined
                               : Icons.check_circle_outline,
                           size: 64,
-                          color: _selectedFile == null
+                          color: _selectedFileBytes == null
                               ? AppColors.primary
                               : AppColors.success,
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          _selectedFile == null
+                          _selectedFileBytes == null
                               ? 'Seleccionar Archivo'
-                              : _selectedFile!.path.split('/').last,
+                              : _selectedFileName ?? 'Archivo seleccionado',
                           style: Theme.of(context).textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
@@ -287,7 +291,7 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
               // Upload button
               ElevatedButton.icon(
                 onPressed:
-                    (_isUploading || _isProcessing || _selectedFile == null)
+                    (_isUploading || _isProcessing || _selectedFileBytes == null)
                         ? null
                         : _uploadDocument,
                 icon: _isUploading || _isProcessing

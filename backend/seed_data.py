@@ -155,12 +155,13 @@ def create_seed_data():
             # Create a quiz for this course
             quiz = Quiz(
                 id=str(uuid4()),
+                user_id=teacher.id,
                 course_id=course.id,
-                title=f"Quiz 1: {course_data['title']}",
-                description="Evaluación del primer módulo",
-                topic=course_data['title'],
+                topic=f"Quiz 1: {course_data['title']}",
                 quiz_type='topic',
-                created_at=datetime.utcnow().isoformat()
+                questions=[],
+                total_questions=0,
+                created_at=datetime.utcnow()
             )
             db.add(quiz)
             db.commit()
