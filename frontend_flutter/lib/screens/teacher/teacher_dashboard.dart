@@ -12,24 +12,6 @@ class TeacherDashboard extends StatelessWidget {
     final user = context.watch<AuthProvider>().user;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard Profesor'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await context.read<AuthProvider>().logout();
-              if (context.mounted) {
-                context.go('/login');
-              }
-            },
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(

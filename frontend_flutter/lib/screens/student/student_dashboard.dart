@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
 import '../../providers/auth_provider.dart';
 import '../../config/theme.dart';
 
@@ -12,24 +11,6 @@ class StudentDashboard extends StatelessWidget {
     final user = context.watch<AuthProvider>().user;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mi Dashboard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await context.read<AuthProvider>().logout();
-              if (context.mounted) {
-                context.go('/login');
-              }
-            },
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(

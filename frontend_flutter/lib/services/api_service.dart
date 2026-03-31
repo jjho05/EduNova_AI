@@ -6,7 +6,6 @@ import '../models/course.dart';
 import '../models/assignment.dart';
 import '../models/notification.dart' as model;
 import 'package:file_picker/file_picker.dart';
-import 'dart:io';
 
 class ApiService {
   late Dio _dio;
