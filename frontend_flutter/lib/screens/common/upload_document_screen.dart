@@ -139,7 +139,19 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
 
     try {
       final apiService = ApiService();
-      final result = await apiService.processDocument(documentId);
+      Map<String, dynamic> result;
+
+      if (_documentType == 'curriculum') {
+        result = await apiService.processCurriculum(
+            documentId, _nameController.text);
+      } else if (_documentType == 'syllabus') {
+        if (widget.courseId == null) {
+          throw Exception("ID de curso requerido para procesar syllabus.");
+        }
+        result = await apiService.processSyllabus(documentId, widget.courseId!);
+      } else {
+        result = await apiService.processDocument(documentId);
+      }
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -290,10 +302,11 @@ class _UploadDocumentScreenState extends State<UploadDocumentScreen> {
 
               // Upload button
               ElevatedButton.icon(
-                onPressed:
-                    (_isUploading || _isProcessing || _selectedFileBytes == null)
-                        ? null
-                        : _uploadDocument,
+                onPressed: (_isUploading ||
+                        _isProcessing ||
+                        _selectedFileBytes == null)
+                    ? null
+                    : _uploadDocument,
                 icon: _isUploading || _isProcessing
                     ? const SizedBox(
                         width: 20,

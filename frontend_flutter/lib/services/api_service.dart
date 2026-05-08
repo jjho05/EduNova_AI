@@ -204,6 +204,22 @@ class ApiService {
     return response.data;
   }
 
+  Future<Map<String, dynamic>> processCurriculum(String documentId, String curriculumName) async {
+    FormData formData = FormData.fromMap({
+      'curriculum_name': curriculumName,
+    });
+    final response = await _dio.post('/documents/$documentId/process-curriculum', data: formData);
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> processSyllabus(String documentId, String courseId) async {
+    FormData formData = FormData.fromMap({
+      'course_id': courseId,
+    });
+    final response = await _dio.post('/documents/$documentId/process-syllabus', data: formData);
+    return response.data;
+  }
+
   // Statistics
   Future<Map<String, dynamic>> getQuizStatistics(String quizId) async {
     final response = await _dio.get('/quizzes/$quizId/statistics');
