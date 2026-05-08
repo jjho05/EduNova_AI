@@ -272,9 +272,9 @@ AWS_SECRET_ACCESS_KEY=
 - ✅ Context manager
 - ✅ Frontend con visualizaciones
 
-### **Pendiente (2%)**
-- [ ] Tests unitarios
-- [ ] Tests de integración
+### **Pendiente (1%)**
+- ✅ Tests unitarios (Añadido Pytest y tests base)
+- ✅ Tests de integración (Añadido CI/CD en GitHub Actions)
 - [ ] Optimizaciones (paginación, rate limiting)
 - [ ] Logs estructurados
 
