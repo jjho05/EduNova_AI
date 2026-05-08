@@ -129,6 +129,80 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
                 const SizedBox(height: 24),
 
+                // Chart Visualization
+                if (progressProvider.totalModules > 0) ...[
+                  Text(
+                    'Visión General',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 220,
+                    child: Stack(
+                      children: [
+                        PieChart(
+                          PieChartData(
+                            sectionsSpace: 0,
+                            centerSpaceRadius: 70,
+                            sections: [
+                              PieChartSectionData(
+                                color: _getProgressColor(
+                                    progressProvider.averageCompletion),
+                                value: progressProvider.averageCompletion > 0
+                                    ? progressProvider.averageCompletion
+                                    : 1, // Avoid 0 size error
+                                title:
+                                    '${progressProvider.averageCompletion.toStringAsFixed(1)}%',
+                                radius: 30,
+                                titleStyle: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              PieChartSectionData(
+                                color: Colors.grey.withOpacity(0.2),
+                                value:
+                                    (100 - progressProvider.averageCompletion) >
+                                            0
+                                        ? (100 -
+                                            progressProvider.averageCompletion)
+                                        : 0,
+                                title: '',
+                                radius: 25,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Completado',
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              ),
+                              Text(
+                                '${progressProvider.averageCompletion.toStringAsFixed(0)}%',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: _getProgressColor(
+                                      progressProvider.averageCompletion),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+
                 // Progress message
                 if (progressProvider.stats != null) ...[
                   Card(
