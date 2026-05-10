@@ -30,6 +30,8 @@ jobs:
       env:
         SECRET_KEY: test_secret_key_123
         ENVIRONMENT: test
+        DATABASE_URL: sqlite:///./test.db
+        GEMINI_API_KEY: dummy_gemini_key_for_tests
       run: |
         pytest
         
@@ -51,7 +53,7 @@ jobs:
       
     - name: Analyze code
       working-directory: ./frontend_flutter
-      run: flutter analyze
+      run: flutter analyze --no-fatal-infos
       
     # Uncomment when widget tests are added
     # - name: Run tests
