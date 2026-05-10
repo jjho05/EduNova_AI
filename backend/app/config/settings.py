@@ -2,13 +2,13 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Database
-    DATABASE_URL: str
+    DATABASE_URL: str = "sqlite:///./educativo.db"
     
     # Gemini API
-    GEMINI_API_KEY: str
+    GEMINI_API_KEY: str = "dummy_key_for_startup"
     
     # JWT
-    SECRET_KEY: str
+    SECRET_KEY: str = "test_secret_key_change_me_in_prod"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
