@@ -6,12 +6,11 @@ def test_register_user(client):
         json={
             "email": "test_user@test.com",
             "password": "testpassword123",
-            "first_name": "Test",
-            "last_name": "User",
+            "name": "Test User",
             "role": "student"
         }
     )
-    assert response.status_code == 200
+    assert response.status_code == 201
     data = response.json()
     assert "access_token" in data
     assert data["token_type"] == "bearer"
@@ -21,8 +20,8 @@ def test_login_user(client):
     # Ensure user exists (registered in previous test using module scope)
     response = client.post(
         "/api/auth/login",
-        data={
-            "username": "test_user@test.com",
+        json={
+            "email": "test_user@test.com",
             "password": "testpassword123"
         }
     )

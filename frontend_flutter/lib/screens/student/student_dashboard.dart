@@ -10,7 +10,6 @@ class StudentDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
     final user = auth.user;
-    final dbFallback = auth.dbFallback;
 
     return Scaffold(
       body: SingleChildScrollView(
