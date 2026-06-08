@@ -23,7 +23,7 @@ class GeminiVisionService:
         
         genai.configure(api_key=api_key)
         # Use the correct vision model
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-3.5-flash')
     
     def process_scanned_pdf(self, pdf_path: str) -> str:
         """

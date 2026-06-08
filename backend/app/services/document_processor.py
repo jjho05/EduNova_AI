@@ -8,18 +8,19 @@ import os
 import json
 
 from .pdf_extractor import PDFExtractor
+from ..config import settings
 
 
 class DocumentProcessor:
     """Process educational documents with Gemini AI"""
     
     def __init__(self):
-        api_key = os.getenv('GEMINI_API_KEY')
+        api_key = settings.GEMINI_API_KEY
         if not api_key:
-            raise ValueError("GEMINI_API_KEY not found in environment")
+            raise ValueError("GEMINI_API_KEY not configured")
         
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-pro')
+        self.model = genai.GenerativeModel('gemini-3.5-flash')
         self.pdf_extractor = PDFExtractor()
     
     async def process_document(self, file_path: str, document_type: str = "general") -> Dict:

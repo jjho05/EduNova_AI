@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 genai.configure(api_key=settings.GEMINI_API_KEY)
 
 # Create model
-model = genai.GenerativeModel('gemini-3-flash-preview')
+model = genai.GenerativeModel('gemini-3.5-flash')
 
 # System instruction for educational context
 SYSTEM_INSTRUCTION = """

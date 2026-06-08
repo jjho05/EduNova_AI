@@ -27,7 +27,7 @@ class CurriculumProcessor:
         
         genai.configure(api_key=api_key)
         # Use consistent model
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-3.5-flash')
         self.pdf_extractor = PDFExtractor()
     
     async def process_curriculum(
