@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../config/theme.dart';
+import '../../providers/auth_provider.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget child;
@@ -157,6 +159,8 @@ class MainLayout extends StatelessWidget {
   }
 
   Widget _buildTopBar(BuildContext context) {
+    final dbFallback = context.watch<AuthProvider>().dbFallback;
+
     return Container(
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -171,6 +175,27 @@ class MainLayout extends StatelessWidget {
           const Text(
             'Panel de Control',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(width: 12),
+          Tooltip(
+            message: dbFallback
+                ? 'Base de datos de respaldo activa (Supabase dormida o inactiva)'
+                : 'Conectado a la base de datos principal (Supabase activa)',
+            child: Container(
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(
+                color: dbFallback ? AppColors.warning : AppColors.success,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: (dbFallback ? AppColors.warning : AppColors.success).withOpacity(0.4),
+                    blurRadius: 6,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+            ),
           ),
           const Spacer(),
           Container(

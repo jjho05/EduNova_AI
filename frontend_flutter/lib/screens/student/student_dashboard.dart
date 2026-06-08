@@ -18,32 +18,6 @@ class StudentDashboard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (dbFallback) ...[
-              Container(
-                margin: const EdgeInsets.only(bottom: 24),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.warning.withOpacity(0.15),
-                  border: Border.all(color: AppColors.warning),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 28),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Text(
-                        'La base de datos de Supabase está inactiva o dormida. Por favor, despiértala desde tu panel de Supabase para recuperar tus datos.',
-                        style: TextStyle(
-                          color: AppColors.warning,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
             // Welcome message
             Text(
               '¡Hola, ${user?.name ?? "Estudiante"}!',
