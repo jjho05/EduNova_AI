@@ -58,7 +58,11 @@ app.include_router(enrollments.router, prefix="/api", tags=["Enrollments"])
 # Health check endpoint
 @app.get("/api/health")
 def health_check():
-    return {"status": "healthy"}
+    from .database import IS_DATABASE_FALLBACK
+    return {
+        "status": "healthy",
+        "database_fallback": IS_DATABASE_FALLBACK
+    }
 
 # Mount static files (Flutter Web)
 static_dir = Path(__file__).parent.parent / "static"

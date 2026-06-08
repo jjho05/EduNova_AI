@@ -10,14 +10,28 @@ class AuthProvider with ChangeNotifier {
   User? _user;
   bool _isLoading = false;
   String? _error;
+  bool _dbFallback = false;
 
   User? get user => _user;
   bool get isLoading => _isLoading;
   String? get error => _error;
   bool get isAuthenticated => _user != null;
+  bool get dbFallback => _dbFallback;
+
+  Future<void> checkDatabaseStatus() async {
+    try {
+      final health = await _api.checkHealth();
+      _dbFallback = health['database_fallback'] ?? false;
+      notifyListeners();
+    } catch (_) {
+      _dbFallback = true;
+      notifyListeners();
+    }
+  }
 
   Future<void> loadUser() async {
     _user = await _storage.getUser();
+    await checkDatabaseStatus();
     notifyListeners();
   }
 
@@ -32,6 +46,7 @@ class AuthProvider with ChangeNotifier {
       await _storage.saveToken(response['access_token']);
       _user = User.fromJson(response['user']);
       await _storage.saveUser(_user!);
+      await checkDatabaseStatus();
 
       _isLoading = false;
       notifyListeners();
@@ -55,6 +70,7 @@ class AuthProvider with ChangeNotifier {
       await _storage.saveToken(response['access_token']);
       _user = User.fromJson(response['user']);
       await _storage.saveUser(_user!);
+      await checkDatabaseStatus();
 
       _isLoading = false;
       notifyListeners();

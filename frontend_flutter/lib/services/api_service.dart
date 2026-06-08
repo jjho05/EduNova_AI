@@ -307,4 +307,14 @@ class ApiService {
     final response = await _dio.get('/progress/course/$courseId');
     return List<Map<String, dynamic>>.from(response.data);
   }
+
+  // Health check
+  Future<Map<String, dynamic>> checkHealth() async {
+    try {
+      final response = await _dio.get('/health');
+      return response.data;
+    } catch (e) {
+      return {'status': 'error', 'database_fallback': true};
+    }
+  }
 }
