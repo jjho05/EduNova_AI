@@ -63,7 +63,7 @@ def create_seed_data():
             name="Prof. Juan García",
             password_hash=hash_password("profesor123"),
             role="teacher",
-            created_at=datetime.utcnow().isoformat()
+            created_at=datetime.utcnow()
         )
         db.add(teacher)
         
@@ -82,7 +82,7 @@ def create_seed_data():
                 name=name,
                 password_hash=hash_password("alumno123"),
                 role="student",
-                created_at=datetime.utcnow().isoformat()
+                created_at=datetime.utcnow()
             )
             students.append(student)
             db.add(student)
@@ -123,7 +123,7 @@ def create_seed_data():
                 title=course_data["title"],
                 description=course_data["description"],
                 user_id=teacher.id,
-                created_at=datetime.utcnow().isoformat()
+                created_at=datetime.utcnow()
             )
             courses.append(course)
             db.add(course)
@@ -179,7 +179,7 @@ def create_seed_data():
                     id=str(uuid4()),
                     student_id=student.id,
                     course_id=course.id,
-                    enrolled_at=datetime.utcnow().isoformat()
+                    enrolled_at=datetime.utcnow()
                 )
                 db.add(enrollment)
                 enrollments += 1
